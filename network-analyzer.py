@@ -3,13 +3,11 @@ from scapy.all import sniff, IP, TCP, UDP, ICMP, ARP, DNS, Raw, Ether
 import signal
 import sys
 
-# Update the packet counts dictionary to include new protocols
 packet_counts = {
     'TCP': 0, 'UDP': 0, 'ICMP': 0, 'ARP': 0, 'DNS': 0, 'HTTP': 0,
     'SSL/TLS': 0, 'SMTP': 0, 'FTP': 0, 'SNMP': 0, 'SSH':0 ,'RDP':0, 'Other': 0
 }
 
-# List to store packet data for DataFrame
 packets_data = []
 
 def process_ssh(packet):
@@ -35,7 +33,7 @@ def process_http(packet):
         if Raw in packet:
             packet_counts['HTTP'] += 1
             try:
-                return f"HTTP data: {packet[Raw].load.decode()[:50]}..."  # Decode and display part of the payload
+                return f"HTTP data: {packet[Raw].load.decode()[:50]}..."
             except UnicodeDecodeError:
                 return "HTTP data: [non-ASCII data]"
     return ""
@@ -106,7 +104,7 @@ def handle_packet(packet):
     })
 
     print(f"{protocol} packet from {ip_src}:{sport} to {ip_dst}:{dport} | {detail}")
-    
+
 def save_data():
     df = pd.DataFrame(packets_data)
     df.to_csv('network_traffic.csv', index=False)
