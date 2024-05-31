@@ -103,7 +103,6 @@ root.geometry("1000x800")
 
 capture_active = tk.IntVar(value=0)
 
-# Create a notebook (tabbed interface)
 notebook = ttk.Notebook(root)
 notebook.pack(fill=tk.BOTH, expand=True)
 
@@ -151,12 +150,9 @@ menubar.add_cascade(label="Help", menu=help_menu)
 status = ttk.Label(root, text="Ready", relief=tk.SUNKEN, anchor=tk.W)
 status.pack(side=tk.BOTTOM, fill=tk.X)
 
-# Define other functions as before, but include updates to status bar and log
 def log_message(message):
     log_console.insert(tk.END, message + '\n')
     log_console.see(tk.END)
     status.config(text=message)
-
-# Rest of the application logic (packet handling, start_capture, stop_capture, save_data) remains unchanged
 
 root.mainloop()
